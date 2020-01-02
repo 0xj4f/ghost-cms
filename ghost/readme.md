@@ -1,0 +1,3 @@
+# Ghost Content
+
+- images
