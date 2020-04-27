@@ -21,4 +21,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: h3ll0w0rld
     volumes:
-      - "./database:/var/lib/mysql"
+      - "GHOST_VOLUME:/var/lib/mysql"
+
+volumes:
+  GHOST_VOLUME:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/john/Volumes/ghost-cms
