@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7
+        image: mysql:5.7 # ghost:3.2-alpine compatibility
         # image: mysql:8
         ports:
         - containerPort: 3306

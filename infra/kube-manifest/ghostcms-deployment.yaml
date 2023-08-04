@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ghost
-        image: ghost:3.2-alpine
+        image: ghost:3.2-alpine # mysql:5.7 compatibility
         ports:
         - containerPort: 2368
         env:
