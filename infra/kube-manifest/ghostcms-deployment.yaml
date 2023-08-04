@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+      - name: ghost
+        image: ghost:3.2-alpine # mysql:5.7 compatibility
+        ports:
+        - containerPort: 2368
+        env:
+        - name: database__client
+          value: "mysql"
+        - name: database__connection__host
+          value: "mysql" # use mysql service name as host
+        - name: database__connection__user
+          value: "ghost_user"
+        - name: database__connection__password
+          value: h3ll0w0rld
+        - name: database__connection__database
+          value: "ghost"
+        volumeMounts:
+        - mountPath: /var/lib/ghost/content
+          name: ghost-content
+      volumes:
+      - name: ghost-content
+        persistentVolumeClaim:
+          claimName: ghost-content-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-content-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
