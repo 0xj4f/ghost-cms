@@ -7,6 +7,6 @@ spec:
     app: ghost
   ports:
     - protocol: TCP
-      port: 80
+      port: 2368
       targetPort: 2368
   type: LoadBalancer
