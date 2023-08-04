@@ -12,9 +12,18 @@ spec:
       labels:
         app: mysql
     spec:
+      initContainers:
+      - name: volume-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 999:999 /var/lib/mysql"]
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-pv
+
       containers:
       - name: mysql
-        image: mysql:5.7
+        # image: mysql:5.7
+        image: mysql:8
         command: ["mysqld"]
         args: ["--ignore-db-dir=lost+found"]
         ports:

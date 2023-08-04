@@ -23,9 +23,9 @@ spec:
         - name: database__connection__host
           value: "mysql" # use mysql service name as host
         - name: database__connection__user
-          value: "root"
+          value: "ghost_user"
         - name: database__connection__password
-          value: "h3ll0w0rld"
+          value: h3ll0w0rld
         - name: database__connection__database
           value: "ghost"
         volumeMounts:
