@@ -1,3 +1,11 @@
+# Readme
+
+## Port Forwarding
+
+```
+kubectl port-forward svc/ghost 2368:2368 -n app
+```
+
 ## Troubleshooting 
 
 ### MYSQL 5.7 Permissions
