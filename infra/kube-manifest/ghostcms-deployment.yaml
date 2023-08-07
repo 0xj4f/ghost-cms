@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ghost
+  name: ghost-v5
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ghost
+      app: ghost-v5
   template:
     metadata:
       labels:
-        app: ghost
+        app: ghost-v5
     spec:
       containers:
-      - name: ghost
-        image: ghost:3.2-alpine # mysql:5.7 compatibility
+      - name: ghost-v5
+        image: ghost:5.58-alpine  
         ports:
         - containerPort: 2368
         env:
@@ -27,10 +27,10 @@ spec:
         - name: database__connection__password
           value: h3ll0w0rld
         - name: database__connection__database
-          value: "ghost"
+          value: "ghost-v5"
         volumeMounts:
         - mountPath: /var/lib/ghost/content
-          name: ghost-content
+          name: ghost-content-v5
         resources:
           limits:
             cpu: "250m"    # 250 milliCPU (0.25 CPU cores)
@@ -39,15 +39,15 @@ spec:
             cpu: "100m"    # 100 milliCPU (0.1 CPU cores)
             memory: "256Mi"  # 256 Mebibytes (MiB) of memory
       volumes:
-      - name: ghost-content
+      - name: ghost-content-v5
         persistentVolumeClaim:
-          claimName: ghost-content-pvc
+          claimName: ghost-content-v5-pvc
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ghost-content-pvc
+  name: ghost-content-v5-pvc
 spec:
   accessModes:
   - ReadWriteOnce

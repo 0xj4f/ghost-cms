@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ghost
+  name: ghost-v5
 spec:
   selector:
-    app: ghost
+    app: ghost-v5
   ports:
     - protocol: TCP
       port: 2368
