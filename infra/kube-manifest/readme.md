@@ -6,6 +6,15 @@
 kubectl port-forward svc/ghost 2368:2368 -n app
 ```
 
+## Performance table 
+ 
+**ghost-3.2** 
+
+- 500 requests in 18 seconds - 618m cpu
+- 1000 requests in 31 seconds - 0.643 cpu 476 ram
+- 2000 requests in 59 seconds - 0.848 cpu 500 ram 
+
+
 ## Troubleshooting 
 
 ### MYSQL 5.7 Permissions
