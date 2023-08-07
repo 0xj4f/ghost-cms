@@ -31,10 +31,18 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/ghost/content
           name: ghost-content
+        resources:
+          limits:
+            cpu: "250m"    # 250 milliCPU (0.25 CPU cores)
+            memory: "512Mi"  # 512 Mebibytes (MiB) of memory
+          requests:
+            cpu: "100m"    # 100 milliCPU (0.1 CPU cores)
+            memory: "256Mi"  # 256 Mebibytes (MiB) of memory
       volumes:
       - name: ghost-content
         persistentVolumeClaim:
           claimName: ghost-content-pvc
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
