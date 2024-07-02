@@ -1,32 +1,50 @@
-version: '3.1'
+version: '3.8'
 
 services:
-  ghost:
-    image: ghost:3.2-alpine
-    restart: always
-    ports:
-      - 2368:2368
+  mysql:
+    image: mysql:8.0
+    container_name: ghost-cms-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ghost
+      MYSQL_USER: ghost_user
+      MYSQL_PASSWORD: ghost_password
     volumes:
-      - ./ghost:/var/lib/ghost/content
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ghost-network
+
+  ghost:
+    image: ghost:5.87.0
+    container_name: ghost-cms-ghost
     environment:
       database__client: mysql
-      database__connection__host: db
-      database__connection__user: root
-      database__connection__password: h3ll0w0rld
+      database__connection__host: mysql
+      database__connection__user: ghost_user
+      database__connection__password: ghost_password
       database__connection__database: ghost
-
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: h3ll0w0rld
+    ports:
+      - "2368:2368"
+    depends_on:
+      - mysql
+    networks:
+      - ghost-network
     volumes:
-      - "GHOST_VOLUME:/var/lib/mysql"
+      - GHOST_VOLUME:/var/lib/ghost/content
+    user: "1000:1000"  # Adjust this to match your host user ID
+
+        #entrypoint: ["sh", "-c", "./wait-for-mysql.sh mysql && npm start"]
+
+networks:
+  ghost-network:
 
 volumes:
+  mysql_data:
+    driver: local
   GHOST_VOLUME:
     driver: local
     driver_opts:
       o: bind
       type: none
       device: /home/j4f/docker_volumes/ghost-cms
+
